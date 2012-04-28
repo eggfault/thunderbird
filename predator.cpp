@@ -15,7 +15,7 @@ Predator::Predator(int x, int y)
     healthBarColor_ = qRgb(64, 213, 43);
     healthBarColor_.setAlpha(204);
     healthBarBorderColor_ = qRgb(23, 78, 16);
-    reward_ = 580;
+    reward_ = 380;
     movesRandomly_ = true;
     projectile_ = 2;
     fireRate_ = 2;
