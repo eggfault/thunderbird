@@ -1,0 +1,39 @@
+INSTRUCTIONS for THUNDERBIRD by George Li
+=========================================
+
+A. Controls:
+
+*[W][A][S][D] to move character and within menus. The main menu and shop window are all navigated using these keys. Do not use arrow keys or the mouse.
+*[SPACEBAR] to shoot with the currently selected weapon or to buy the currently selected item.
+*[1][2][3][4][5][6][7][8][9][0][-] to select your weapon.
+*[TAB] to exit the shop.
+*[ESC] to quit the game (returns back to the main menu).
+
+B. How to play:
+
+*You can adjust the graphic settings from the main menu by selecting SETTINGS and pressing [SPACEBAR]. The current quality is given in the bottom-left. This version only lets you adjust the background quality. If the game is lagging on your computer, keep pressing [SPACEBAR] on SETTINGS until the quality rolls over the max value back to 0. This will remove all islands/continents though. You can always come back to the main menu with [ESC] to change the settings again.
+*Destroy enemies by shooting at them and survive by dodging what they shoot at you.
+*The blue bar in the upper-right is your shields (aka health). When you run out of shields you die.
+*The purple bar below the shields is your power. Don't worry about this yet until you buy the Bubble Shield (under tier 5 upgrades of the shop).
+*When you have a Bubble Shield you can activate it by holding [SHIFT] and you will become temporarily invincible. It will drain your power and disappear when your power reaches 0. Your power will recharge steadily on its own though. You can also upgrade your recharge rate with a Fission Battery (tier 5 upgrade).
+*You can strafe left and right with [A] and [D] and move up and down with [W] and [S], but you can only move up a limited distance. You can hold the keys to move up-right, down-left, etc. You can also shoot with [SPACEBAR] while moving and use your Bubble Shield at the same time.
+*Earn credits by killing enemies and collecting the yellow credit icons. Credits are used to buy weapons and upgrades in the shop.
+*You will enter the shop after beating each level.
+*When you are in the shop, use [W][A][S][D] to select different items. You can only buy unlocked items for which you have enough credits. Use [SPACEBAR] to buy the item. Use [TAB] to continue to the next level.
+*You unlock each weapon tier by beating levels. You will have access to all tiers after level 5 (since there are 5 tiers).
+*Some items can only be unlocked AFTER you buy the weapon at the top of the tier. For example, you need a laser rifle in order to buy lasers.
+*You can heal shields and also upgrade max shields. Upgrading your max shields will also heal you by the amount it adds to the max.
+*You have finite ammo per each level and must switch weapons when you run out. The basic weapon (450 SMC bullet or [1]) has infinite ammo in case you are completely out.
+*The gatling gun will increase the fire rate of bullets only (basic 450 SMC bullets and 25mm bullets).
+*Explosive weapons such as the Hydra Missile, Mininuke, and Plasma Bomb will deal damage within an area. The damage decreases inversely with distance from the center. The blast radius can be upgraded too (tier 3).
+*The Autorepair upgrade (tier 4) can constantly heal you. It's pretty useful, but also kind of expensive...
+*The railgun (tier 5) can damage multiple enemies in one shot (it travels through them).
+*There a few screenshots in the folder too if you are curious.
+*There are 7 levels with a crazy boss at the end and 2 semi-bosses before that. Each level gets harder (of course). See if you can reach the end!
+*Let me know if you have any questions / feedback. Thanks!
+
+C. Other notes:
+
+*This game has been tested mainly on Windows OS, running on QtCreator. It works on UNIX / parallel too but might not be optimal (and will lag a lot if you are using USC wireless).
+*No known bugs/glitches.
+*Ver. 9
