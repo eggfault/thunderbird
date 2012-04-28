@@ -13,7 +13,7 @@ B. How to play:
 
 *You can adjust the graphic settings from the main menu by selecting SETTINGS and pressing [SPACEBAR]. The current quality is given in the bottom-left. This version only lets you adjust the background quality. If the game is lagging on your computer, keep pressing [SPACEBAR] on SETTINGS until the quality rolls over the max value back to 0. This will remove all islands/continents though. You can always come back to the main menu with [ESC] to change the settings again.
 *Destroy enemies by shooting at them and survive by dodging what they shoot at you.
-*The blue bar in the upper-right is your shields (aka health). When you run out of shields you die.
+*The blue bar in the upper-right is your shields (aka health). When you run out of shields you die. Picking up the medical packs can heal you.
 *The purple bar below the shields is your power. Don't worry about this yet until you buy the Bubble Shield (under tier 5 upgrades of the shop).
 *When you have a Bubble Shield you can activate it by holding [SHIFT] and you will become temporarily invincible. It will drain your power and disappear when your power reaches 0. Your power will recharge steadily on its own though. You can also upgrade your recharge rate with a Fission Battery (tier 5 upgrade).
 *You can strafe left and right with [A] and [D] and move up and down with [W] and [S], but you can only move up a limited distance. You can hold the keys to move up-right, down-left, etc. You can also shoot with [SPACEBAR] while moving and use your Bubble Shield at the same time.
@@ -35,5 +35,7 @@ B. How to play:
 C. Other notes:
 
 *This game has been tested mainly on Windows OS, running on QtCreator. It works on UNIX / parallel too but might not be optimal (and will lag a lot if you are using USC wireless).
+*The background island/continents are generated randomly using a rather inefficient algorithm, but it works so whatever...
 *No known bugs/glitches.
+*A level does not end until all enemies are dead and all credits have been collected or go off the screen. This is not a bug.
 *Ver. 9
