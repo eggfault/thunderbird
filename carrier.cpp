@@ -15,7 +15,7 @@ Carrier::Carrier(int x, int y)
     healthBarColor_ = qRgb(64, 213, 43);
     healthBarColor_.setAlpha(204);
     healthBarBorderColor_ = qRgb(23, 78, 16);
-    reward_ = 1000;
+    reward_ = 2000;
     movesRandomly_ = false;
     projectile_ = 0;
     fireRate_ = 0;
