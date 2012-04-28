@@ -14,7 +14,7 @@ int windowHeight = 640;
 int largeWindowWidth = 640;
 int largeWindowHeight = 640;
 int lowerUIHeight = 80;
-int credits = 20000;
+int credits = 200;
 int score;
 int level;
 int shield = 100;
