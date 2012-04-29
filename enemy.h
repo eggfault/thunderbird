@@ -6,15 +6,15 @@
 
 class Enemy : public virtual Character
 {
-	public:
-		void autoMove();
+    public:
+        void autoMove();
         int getReward();
         bool movesRandomly();
         void modifyX(int amount);
         void modifyY(int amount);
         int getProjectile();
         int getFireRate();
-	protected:
+    protected:
         int reward_;
         bool movesRandomly_;
         int projectile_;

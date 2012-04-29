@@ -3,19 +3,19 @@
 
 Player::Player(int x, int y, int currentHealth, int maxHealth)
 {
-	x_ = x;
-	y_ = y;
-	speed_ = 3;
-	xdir_ = 0;
-	ydir_ = 0;
+    x_ = x;
+    y_ = y;
+    speed_ = 3;
+    xdir_ = 0;
+    ydir_ = 0;
     image_.load(":img/player.png");
-	healthBarImage_.load("img/playerHealthBar.png");
-	healthBarBackgroundImage_.load("img/playerHealthBarBackground.png");
-	rect_ = image_.rect();
+    healthBarImage_.load("img/playerHealthBar.png");
+    healthBarBackgroundImage_.load("img/playerHealthBarBackground.png");
+    rect_ = image_.rect();
     health_ = currentHealth;
     maxHealth_ = maxHealth;
-	healthBarColor_ = qRgb(6, 113, 220);
-	healthBarColor_.setAlpha(204);
+    healthBarColor_ = qRgb(6, 113, 220);
+    healthBarColor_.setAlpha(204);
     healthBarBorderColor_ = qRgb(124, 179, 242);
     powerBarColor_ = qRgb(159, 10, 245);
     powerBarColor_.setAlpha(180);
@@ -30,12 +30,12 @@ Player::~Player()
 
 void Player::moveLeft(int speed)
 {
-	x_ -= speed;
+    x_ -= speed;
 }
 
 void Player::moveRight(int speed)
 {
-	x_ += speed;
+    x_ += speed;
 }
 
 void Player::moveUp(int speed)

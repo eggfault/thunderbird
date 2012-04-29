@@ -7,7 +7,7 @@ class Vector : public virtual Projectile
 {
 public:
     Vector(int x, int y, int xdir, int ydir);
-	~Vector();
+    ~Vector();
 private:
 
 };

@@ -2,12 +2,12 @@
 
 int Character::getHealth()
 {
-	return health_;
+    return health_;
 }
 
 void Character::modifyHealth(int amount)
 {
-	health_ += amount;
+    health_ += amount;
 }
 
 void Character::setHealth(int health)
@@ -17,27 +17,27 @@ void Character::setHealth(int health)
 
 int Character::getMaxHealth()
 {
-	return maxHealth_;
+    return maxHealth_;
 }
 
 QColor Character::getHealthBarColor()
 {
-	return healthBarColor_;
+    return healthBarColor_;
 }
 
 QColor Character::getHealthBarBorderColor()
 {
-	return healthBarBorderColor_;
+    return healthBarBorderColor_;
 }
 
 QImage Character::getHealthBarImage()
 {
-	return healthBarImage_;
+    return healthBarImage_;
 }
 
 QImage Character::getHealthBarBackgroundImage()
 {
-	return healthBarBackgroundImage_;
+    return healthBarBackgroundImage_;
 }
 
 void Character::teleport(int x, int y)
