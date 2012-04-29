@@ -28,8 +28,8 @@
 #include "scenery.h"
 #include <QWidget>
 #include <QKeyEvent>
+#include <QTime>
 #include <vector>
-#include <ctime>
 
 using namespace std;
 
@@ -77,9 +77,10 @@ class Bakoom : public QWidget
     bool gameWon_;
     bool gameStarted_;
     bool paused_;
-    clock_t shootCooldown_;
-    clock_t powerRechargeTimer_;
-    clock_t autoHealTimer_;
+    QTime time;
+    int shootCooldown_;
+    int powerRechargeTimer_;
+    int autoHealTimer_;
     BubbleShield *bubbleShield_;
     int ammunition_[20];
 

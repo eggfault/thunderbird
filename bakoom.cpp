@@ -29,10 +29,10 @@ Bakoom::Bakoom(vector<Enemy*> enemies, QWidget *parent) : QWidget(parent), medip
 
     currentWeapon_ = 0;
 
-    // Unix OS and Windows OS operate on different clocks, so I need to adjust for this
-    int clockFactor = 20;               // assuming Windows OS
-    if(CLOCKS_PER_SEC == 1000000)       // most likely Unix OS
-        clockFactor = 3000;             // adjust for Unix OS...not sure how accurate this really is though
+    // used to be needed because Unix OS and Windows OS operate on different clocks when using clock() function (which is no longer used)
+    double clockFactor = 4.14; // calibrated to be same as clock() on Unix, may still need adjusting since Windows is reference environment
+                               // formula: (12650-2852)/(10520000-3420000)*3000 (timed by Andrew on Unix)
+                               //          QTime time   clock() time       old clockFactor for Unix
     // CHANGE THIS IN LATER VER
     if(hasItem[3]) cooldowns_[0] = 7*clockFactor;                       // check if has gatling gun upgrade
     else            cooldowns_[0] = 14*clockFactor;                     // bullet 450 SMC
@@ -142,7 +142,7 @@ void Bakoom::paintEvent(QPaintEvent *event)
         else painter.setPen(Qt::red);
         painter.drawText(10,38,200,16,Qt::AlignLeft,"Ammo: " + QString::number(ammunition_[currentWeapon_]));
         // draw NO AMMO message
-        if(ammunition_[currentWeapon_] <= 0 && clock() % 100 < 50)
+        if(ammunition_[currentWeapon_] <= 0 && time.elapsed() % 100 < 50)
         {
             painter.setFont(noAmmo);
             painter.setPen(Qt::red);
@@ -379,12 +379,12 @@ void Bakoom::playerKeyEvents()
         player_ ->moveRight(player_ ->getSpeed());
     if(aKeyPressed_ && !dKeyPressed_ && player_ ->getRect().x() > 0)
         player_ ->moveLeft(player_ ->getSpeed());
-    if(clock() - powerRechargeTimer_ >= powerRechargeCooldown_)
+    if(time.elapsed() - powerRechargeTimer_ >= powerRechargeCooldown_)
     {
         if(bubbleShield_->isActivated() && player_ ->getPower() > 0) player_ ->modifyPower(-2);
         else if(!bubbleShield_->isActivated() && player_ ->getPower() < player_ ->getMaxPower()) player_ ->modifyPower(1);
         else if(bubbleShield_->isActivated() && player_ ->getPower() <= 0) bubbleShield_->deactivate();
-        powerRechargeTimer_ = clock();
+        powerRechargeTimer_ = time.elapsed();
     }
 }
 
@@ -425,6 +425,7 @@ void Bakoom::startGame()
         gameOver_ = FALSE;
         gameWon_ = FALSE;
         gameStarted_ = TRUE;
+        time.start();
         timerId_ = startTimer(10);
     }
 }
@@ -458,7 +459,7 @@ void Bakoom::victory()
 
 void Bakoom::shootProjectile()
 {
-    if(clock() - shootCooldown_ >= cooldowns_[currentWeapon_])
+    if(time.elapsed() - shootCooldown_ >= cooldowns_[currentWeapon_])
     {
         if(ammunition_[currentWeapon_] <= 0)
             return;
@@ -527,7 +528,7 @@ void Bakoom::shootProjectile()
                 projectiles_.push_back(new Bullet450SMC(projLeft_x, projLeft_y, 0, -1));
                 projectiles_.push_back(new Bullet450SMC(projRight_x, projRight_y, 0, -1));
         }
-        shootCooldown_ = clock();
+        shootCooldown_ = time.elapsed();
     }
 }
 
@@ -716,11 +717,11 @@ void Bakoom::checkOutOfBounds()            // delete objects outside of window
 
 void Bakoom::autoHeal()
 {
-    if(clock() - autoHealTimer_ >= autoHealCooldown_)
+    if(time.elapsed() - autoHealTimer_ >= autoHealCooldown_)
     {
         if(player_ ->getHealth() < player_ ->getMaxHealth()) player_ ->modifyHealth(autoHealAmount_);
         if(player_ ->getHealth() > player_ ->getMaxHealth()) player_ ->setHealth(player_ ->getMaxHealth());
-        autoHealTimer_ = clock();
+        autoHealTimer_ = time.elapsed();
     }
 }
 
