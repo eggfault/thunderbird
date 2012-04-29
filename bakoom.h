@@ -28,8 +28,8 @@
 #include "scenery.h"
 #include <QWidget>
 #include <QKeyEvent>
+#include <QTime>
 #include <vector>
-#include <ctime>
 
 using namespace std;
 
@@ -43,25 +43,25 @@ class Bakoom : public QWidget
     void paintEvent(QPaintEvent *event);
     void timerEvent(QTimerEvent *event);
     void keyPressEvent(QKeyEvent *event);
-	void keyReleaseEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
     void startGame();
     void pauseGame();
     void stopGame();
     void victory();
     void checkCollision();
-	void checkOutOfBounds();
-	void deleteDead();
-	void spawnMedipaks();
-	void playerKeyEvents();
+    void checkOutOfBounds();
+    void deleteDead();
+    void spawnMedipaks();
+    void playerKeyEvents();
     void shootProjectile();
     void moveEnemies();
-	void createEnemyProjectiles();
+    void createEnemyProjectiles();
     void activateBubbleShield();
     void deactivateBubbleShield();
     void createRandomScenery();
     void autoHeal();
-	friend bool objectIsDead(Object* o);
+    friend bool objectIsDead(Object* o);
     Enemy* nearestEnemyTo(int x, int y);
     double distanceBetween(int x1, int y1, int x2, int y2);
 
@@ -77,9 +77,10 @@ class Bakoom : public QWidget
     bool gameWon_;
     bool gameStarted_;
     bool paused_;
-    clock_t shootCooldown_;
-    clock_t powerRechargeTimer_;
-    clock_t autoHealTimer_;
+    QTime time;
+    int shootCooldown_;
+    int powerRechargeTimer_;
+    int autoHealTimer_;
     BubbleShield *bubbleShield_;
     int ammunition_[20];
 
@@ -89,7 +90,7 @@ class Bakoom : public QWidget
     int cooldowns_[20];
     int powerRechargeCooldown_;
     int autoHealCooldown_;
-	
+    
     bool aKeyPressed_;
     bool dKeyPressed_;
     bool wKeyPressed_;

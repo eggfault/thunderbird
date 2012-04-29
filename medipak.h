@@ -5,11 +5,11 @@
 
 class Medipak : public virtual Object
 {
-	public:
-		Medipak(int x, int y);
-		~Medipak();
-		void autoMove();
-	private:
+    public:
+        Medipak(int x, int y);
+        ~Medipak();
+        void autoMove();
+    private:
 
 };
 

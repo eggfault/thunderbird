@@ -6,14 +6,14 @@
 class Projectile : public virtual Object
 {
 public:
-	void autoMove();
-	bool isEnemyProjectile();
-	int getDamage();
+    void autoMove();
+    bool isEnemyProjectile();
+    int getDamage();
     bool isInvincible();
     bool isExplosive();
     bool isHoming();
 protected:
-	int damage_;
+    int damage_;
     bool isEnemyProjectile_;
     bool isExplosive_;
     bool isInvincible_;

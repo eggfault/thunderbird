@@ -23,7 +23,7 @@ Scenery::Scenery(int x, int y, int speed, int type, int rotation)
     y_ = y;
     rect_.translate(x_, y_);
     isDead_ = false;
-    xdir_ = 0; ydir_ = 1;		// down
+    xdir_ = 0; ydir_ = 1;        // down
     speed_ = speed;
 }
 
