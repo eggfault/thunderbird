@@ -41,12 +41,12 @@ void initializeHasItem()
 
 void centerRoom(QWidget &widget, int roomWidth, int roomHeight)
 {
-	int x, y;
-	int screenWidth;
-	int screenHeight;
-	QDesktopWidget *desktop = QApplication::desktop();
-	screenWidth = desktop->width();
-	screenHeight = desktop->height();
+    int x, y;
+    int screenWidth;
+    int screenHeight;
+    QDesktopWidget *desktop = QApplication::desktop();
+    screenWidth = desktop->width();
+    screenHeight = desktop->height();
     x = (screenWidth - roomWidth)/2;
     y = (screenHeight - roomHeight)/2;
     widget.setGeometry(x, y, roomWidth, roomHeight);
@@ -133,7 +133,7 @@ void initializeEnemies(vector<vector<Enemy*> > &vectorOfWaves)
 
 int main(int argc, char *argv[])
 {
-	srand(time(NULL));
+    srand(time(NULL));
     vector<vector<Enemy*> > vectorOfWaves;
     initializeHasItem();
 

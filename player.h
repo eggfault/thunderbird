@@ -9,8 +9,8 @@ class Player : public virtual Character
   public:
     Player(int x, int y, int currentHealth, int maxHealth);
     ~Player();
-	void moveLeft(int amount);
-	void moveRight(int amount);
+    void moveLeft(int amount);
+    void moveRight(int amount);
     void moveUp(int amount);
     void moveDown(int amount);
     void resetState(int x, int y);

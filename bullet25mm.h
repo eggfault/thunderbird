@@ -7,7 +7,7 @@ class Bullet25mm : public virtual Projectile
 {
 public:
     Bullet25mm(int x, int y, int xdir, int ydir);
-	~Bullet25mm();
+    ~Bullet25mm();
 private:
 
 };

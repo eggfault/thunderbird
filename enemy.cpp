@@ -2,9 +2,9 @@
 
 void Enemy::autoMove()
 {
-	x_ += xdir_*speed_;
-	y_ += ydir_*speed_;
-	autoUpdateRect();
+    x_ += xdir_*speed_;
+    y_ += ydir_*speed_;
+    autoUpdateRect();
 }
 
 int Enemy::getReward()

@@ -8,7 +8,7 @@
 
 bool objectIsDead(Object* o)
 {
-	return o->isDead();
+    return o->isDead();
 }
 
 Bakoom::Bakoom(vector<Enemy*> enemies, QWidget *parent) : QWidget(parent), medipakHealAmount_(25),
@@ -29,10 +29,10 @@ Bakoom::Bakoom(vector<Enemy*> enemies, QWidget *parent) : QWidget(parent), medip
 
     currentWeapon_ = 0;
 
-    // Unix OS and Windows OS operate on different clocks, so I need to adjust for this
-    int clockFactor = 20;               // assuming Windows OS
-    if(CLOCKS_PER_SEC == 1000000)       // most likely Unix OS
-        clockFactor = 3000;             // adjust for Unix OS...not sure how accurate this really is though
+    // used to be needed because Unix OS and Windows OS operate on different clocks when using clock() function (which is no longer used)
+    double clockFactor = 4.14; // calibrated to be same as clock() on Unix, may still need adjusting since Windows is reference environment
+                               // formula: (12650-2852)/(10520000-3420000)*3000 (timed by Andrew on Unix)
+                               //          QTime time   clock() time       old clockFactor for Unix
     // CHANGE THIS IN LATER VER
     if(hasItem[3]) cooldowns_[0] = 7*clockFactor;                       // check if has gatling gun upgrade
     else            cooldowns_[0] = 14*clockFactor;                     // bullet 450 SMC
@@ -78,10 +78,10 @@ Bakoom::~Bakoom()
 
 void Bakoom::paintEvent(QPaintEvent *event)
 {
-	QPainter painter(this);
+    QPainter painter(this);
 
     if(gameOver_)
-	{
+    {
         QFont font("Arial", 10, QFont::DemiBold);
         int text_x = 0; int text_y = windowHeight/4;
         painter.setFont(font);
@@ -93,8 +93,8 @@ void Bakoom::paintEvent(QPaintEvent *event)
         painter.drawText(text_x,text_y,windowWidth,16,Qt::AlignCenter,"Press [R] to Restart");
         text_y += 70;
         painter.drawText(text_x,text_y,windowWidth,16,Qt::AlignCenter,"(You keep your stuff)");
-	}
-	else
+    }
+    else
     {
         QRect healthRect, powerRect;
         QFont scoreFont("Arial", 8, QFont::Normal);
@@ -104,20 +104,20 @@ void Bakoom::paintEvent(QPaintEvent *event)
             painter.drawImage(scenery_.at(i)->getRect(), scenery_.at(i)->getImage());
         // draw enemies and enemy health
         for(int i = 0; i < enemies_.size(); i++)
-		{
+        {
             painter.drawImage(enemies_.at(i)->getRect(), enemies_.at(i)->getImage());
                 healthRect.setX(enemies_.at(i)->getRect().x());
                 healthRect.setY(enemies_.at(i)->getRect().y()-15);
                 healthRect.setWidth(enemies_.at(i)->getRect().width());
-				healthRect.setHeight(8);
-			painter.setBrush(Qt::NoBrush);
+                healthRect.setHeight(8);
+            painter.setBrush(Qt::NoBrush);
             painter.setPen(enemies_.at(i)->getHealthBarBorderColor());
-			painter.drawRect(healthRect);
+            painter.drawRect(healthRect);
                 healthRect.setWidth(enemies_.at(i)->getRect().width()*enemies_.at(i)->getHealth()/enemies_.at(i)->getMaxHealth());
             painter.setBrush(enemies_.at(i)->getHealthBarColor());
-			painter.setPen(Qt::NoPen);
-			painter.drawRect(healthRect);
-		}
+            painter.setPen(Qt::NoPen);
+            painter.drawRect(healthRect);
+        }
         // draw medipaks
         for(int i = 0; i < medipaks_.size(); i++)
             painter.drawImage(medipaks_.at(i)->getRect(), medipaks_.at(i)->getImage());
@@ -142,7 +142,7 @@ void Bakoom::paintEvent(QPaintEvent *event)
         else painter.setPen(Qt::red);
         painter.drawText(10,38,200,16,Qt::AlignLeft,"Ammo: " + QString::number(ammunition_[currentWeapon_]));
         // draw NO AMMO message
-        if(ammunition_[currentWeapon_] <= 0 && clock() % 100 < 50)
+        if(ammunition_[currentWeapon_] <= 0 && time.elapsed() % 100 < 50)
         {
             painter.setFont(noAmmo);
             painter.setPen(Qt::red);
@@ -150,16 +150,16 @@ void Bakoom::paintEvent(QPaintEvent *event)
         }
         // draw player health
             healthRect.setX(windowWidth-206);
-			healthRect.setY(10);
-			healthRect.setWidth(196);
-			healthRect.setHeight(24);
-		painter.setBrush(Qt::NoBrush);
+            healthRect.setY(10);
+            healthRect.setWidth(196);
+            healthRect.setHeight(24);
+        painter.setBrush(Qt::NoBrush);
         painter.setPen(player_ ->getHealthBarBorderColor());
-		painter.drawRect(healthRect);
+        painter.drawRect(healthRect);
             healthRect.setWidth(196*player_ ->getHealth()/player_ ->getMaxHealth());
         painter.setBrush(player_ ->getHealthBarColor());
-		painter.setPen(Qt::NoPen);
-		painter.drawRect(healthRect);
+        painter.setPen(Qt::NoPen);
+        painter.drawRect(healthRect);
         // draw player power
             powerRect.setX(windowWidth-206);
             powerRect.setY(36);
@@ -264,9 +264,9 @@ void Bakoom::timerEvent(QTimerEvent *event)
         }
         projectiles_.at(i)->autoMove();
     }
-	checkCollision();
-	checkOutOfBounds();
-	deleteDead();
+    checkCollision();
+    checkOutOfBounds();
+    deleteDead();
     // check for win condition
     if(enemies_.size() == 0 && credits_.size() == 0)
     {
@@ -277,32 +277,32 @@ void Bakoom::timerEvent(QTimerEvent *event)
     if(hasItem[15])
         autoHeal();
     playerKeyEvents();
-	//deleteDead();
+    //deleteDead();
     // move player
     player_->autoUpdateRect();
     spawnMedipaks();
-	repaint();
+    repaint();
 }
 
 void Bakoom::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key())
-	{
-		case Qt::Key_A:
+    {
+        case Qt::Key_A:
             aKeyPressed_ = true;
-			break;
-		case Qt::Key_D:
+            break;
+        case Qt::Key_D:
             dKeyPressed_ = true;
-			break;
+            break;
         case Qt::Key_W:
             wKeyPressed_ = true;
             break;
         case Qt::Key_S:
             sKeyPressed_ = true;
             break;
-		case Qt::Key_Space:
+        case Qt::Key_Space:
             spacebarKeyPressed_ = true;
-			break;
+            break;
         case Qt::Key_1:
             currentWeapon_ = 0;
             break;
@@ -336,9 +336,9 @@ void Bakoom::keyPressEvent(QKeyEvent* event)
         case Qt::Key_Minus:
             if(hasItem[19]) currentWeapon_ = 19;
             break;
-		case Qt::Key_P:
-			pauseGame();
-			break;
+        case Qt::Key_P:
+            pauseGame();
+            break;
         case Qt::Key_Shift:
             if(hasItem[17])
                 bubbleShield_->activate();
@@ -359,18 +359,18 @@ void Bakoom::keyPressEvent(QKeyEvent* event)
                 qApp->exit();
             }
             break;
-		case Qt::Key_Escape:
+        case Qt::Key_Escape:
             restarting = true;
             qApp->exit();
-		default:
-			QWidget::keyPressEvent(event);
-	}
+        default:
+            QWidget::keyPressEvent(event);
+    }
 }
 
 void Bakoom::playerKeyEvents()
 {
     if(spacebarKeyPressed_)
-		shootProjectile();
+        shootProjectile();
     if(wKeyPressed_ && player_ ->getRect().top() > (windowHeight-lowerUIHeight)*3/4)
         player_ ->moveUp(player_ ->getSpeed());
     if(sKeyPressed_ && player_ ->getRect().bottom() < windowHeight-lowerUIHeight)
@@ -379,68 +379,69 @@ void Bakoom::playerKeyEvents()
         player_ ->moveRight(player_ ->getSpeed());
     if(aKeyPressed_ && !dKeyPressed_ && player_ ->getRect().x() > 0)
         player_ ->moveLeft(player_ ->getSpeed());
-    if(clock() - powerRechargeTimer_ >= powerRechargeCooldown_)
+    if(time.elapsed() - powerRechargeTimer_ >= powerRechargeCooldown_)
     {
         if(bubbleShield_->isActivated() && player_ ->getPower() > 0) player_ ->modifyPower(-2);
         else if(!bubbleShield_->isActivated() && player_ ->getPower() < player_ ->getMaxPower()) player_ ->modifyPower(1);
         else if(bubbleShield_->isActivated() && player_ ->getPower() <= 0) bubbleShield_->deactivate();
-        powerRechargeTimer_ = clock();
+        powerRechargeTimer_ = time.elapsed();
     }
 }
 
 void Bakoom::keyReleaseEvent(QKeyEvent* event)
 {
-	switch (event->key())
-	{
-		case Qt::Key_A:
+    switch (event->key())
+    {
+        case Qt::Key_A:
             aKeyPressed_ = false;
-			break;
-		case Qt::Key_D:
+            break;
+        case Qt::Key_D:
             dKeyPressed_ = false;
-			break;
+            break;
         case Qt::Key_W:
             wKeyPressed_ = false;
             break;
         case Qt::Key_S:
             sKeyPressed_ = false;
             break;
-		case Qt::Key_Space:
+        case Qt::Key_Space:
             spacebarKeyPressed_ = false;
-			break;
+            break;
         case Qt::Key_Shift:
             bubbleShield_->deactivate();
             break;
         case Qt::Key_Control:
             bubbleShield_->deactivate();
             break;
-		default:
-			QWidget::keyPressEvent(event);
-	}
+        default:
+            QWidget::keyPressEvent(event);
+    }
 }
 
 void Bakoom::startGame()
 { 
     if (!gameStarted_)
-	{
+    {
         gameOver_ = FALSE;
         gameWon_ = FALSE;
         gameStarted_ = TRUE;
+        time.start();
         timerId_ = startTimer(10);
-	}
+    }
 }
 
 void Bakoom::pauseGame()
 {
     if (paused_)
-	{
+    {
         timerId_ = startTimer(10);
         paused_ = FALSE;
-	}
-	else
-	{
+    }
+    else
+    {
         paused_ = TRUE;
         killTimer(timerId_);
-	}
+    }
 }
 
 void Bakoom::stopGame()
@@ -458,7 +459,7 @@ void Bakoom::victory()
 
 void Bakoom::shootProjectile()
 {
-    if(clock() - shootCooldown_ >= cooldowns_[currentWeapon_])
+    if(time.elapsed() - shootCooldown_ >= cooldowns_[currentWeapon_])
     {
         if(ammunition_[currentWeapon_] <= 0)
             return;
@@ -527,15 +528,15 @@ void Bakoom::shootProjectile()
                 projectiles_.push_back(new Bullet450SMC(projLeft_x, projLeft_y, 0, -1));
                 projectiles_.push_back(new Bullet450SMC(projRight_x, projRight_y, 0, -1));
         }
-        shootCooldown_ = clock();
+        shootCooldown_ = time.elapsed();
     }
 }
 
 void Bakoom::moveEnemies()
 {
     // uniform movement
-    if(enemyMovementTimer_ >= 20)		// same as == 20
-	{
+    if(enemyMovementTimer_ >= 20)        // same as == 20
+    {
         for(int i = 0; i < enemies_.size(); i++)
         {
             if(!enemies_.at(i)->movesRandomly())
@@ -547,8 +548,8 @@ void Bakoom::moveEnemies()
             }
         }
         enemyMovementTimer_ = 0;
-	}
-	else
+    }
+    else
         enemyMovementTimer_ ++;
     if(enemyMovementTimer_ <= 10)
         for(int i = 0; i < enemies_.size(); i++)
@@ -611,24 +612,24 @@ void Bakoom::createEnemyProjectiles()
 void Bakoom::checkCollision()
 {
     for(int i = 0; i < projectiles_.size(); i++)
-	{
+    {
         // kill projectiles_ that collide with bubble shield
         if(projectiles_.at(i)->isEnemyProjectile() && bubbleShield_->isActivated() && projectiles_.at(i)->getRect().intersects(player_ ->getRect()))
             projectiles_.at(i)->setIsDead(true);
         else if(projectiles_.at(i)->isEnemyProjectile())
         {
             if(projectiles_.at(i)->getRect().intersects(player_ ->getRect()))        // collide with enemy projectile
-			{
-                player_ ->modifyHealth(-1*projectiles_.at(i)->getDamage());			// damage player
+            {
+                player_ ->modifyHealth(-1*projectiles_.at(i)->getDamage());            // damage player
                 projectiles_.at(i)->setIsDead(true);
             }
-		}
-		else
-		{
+        }
+        else
+        {
             for(int j = 0; j < enemies_.size(); j++)                                // enemy collides with player projectile
                 if(!enemies_.at(j)->isDead() && projectiles_.at(i)->getRect().intersects(enemies_.at(j)->getRect()))
-				{
-                    enemies_.at(j)->modifyHealth(-1*projectiles_.at(i)->getDamage());	// damage enemy
+                {
+                    enemies_.at(j)->modifyHealth(-1*projectiles_.at(i)->getDamage());    // damage enemy
                     // explosive?
                     if(projectiles_.at(i)->isExplosive())
                         for(int k = 0; k < enemies_.size(); k++)
@@ -640,14 +641,14 @@ void Bakoom::checkCollision()
                         }
                     if(!projectiles_.at(i)->isInvincible()) projectiles_.at(i)->setIsDead(true);
                 }
-		}
+        }
         if(player_ ->getHealth() <= 0)
             stopGame();
-	}
+    }
     // dead enemies?
     for(int i = 0; i < enemies_.size(); i++)
     {
-        if(enemies_.at(i)->getHealth() <= 0)								// kill enemy if health <= 0
+        if(enemies_.at(i)->getHealth() <= 0)                                // kill enemy if health <= 0
         {
             enemies_.at(i)->setIsDead(true);
             score += enemies_.at(i)->getReward();
@@ -658,13 +659,13 @@ void Bakoom::checkCollision()
     // only worry about medipak collision if player is not at full health
     if(player_ ->getHealth() < player_ ->getMaxHealth())
         for(int i = 0; i < medipaks_.size(); i++)
-		{
+        {
             if(medipaks_.at(i)->getRect().intersects(player_ ->getRect()))
-			{
+            {
                 player_ ->modifyHealth(medipakHealAmount_);
                 medipaks_.at(i)->setIsDead(true);
-			}
-		}
+            }
+        }
     // credit collision
     for(int i = 0; i < credits_.size(); i++)
     {
@@ -676,22 +677,22 @@ void Bakoom::checkCollision()
     }
 }
 
-void Bakoom::checkOutOfBounds()			// delete objects outside of window
+void Bakoom::checkOutOfBounds()            // delete objects outside of window
 {
     for(int i = 0; i < projectiles_.size(); i++)
-	{
+    {
         int proj_x = projectiles_.at(i)->getRect().x();
         int proj_y = projectiles_.at(i)->getRect().y();
         if(proj_y > (windowHeight-lowerUIHeight) || proj_y < 0 || proj_x > windowWidth || proj_x < 0)
             projectiles_.at(i)->setIsDead(true);
-	}
+    }
     for(int i = 0; i < medipaks_.size(); i++)
-	{
+    {
         int medi_x = medipaks_.at(i)->getRect().x();
         int medi_y = medipaks_.at(i)->getRect().y();
         if(medi_y > (windowHeight-lowerUIHeight) || medi_y < 0 || medi_x > windowWidth || medi_x < 0)
             medipaks_.at(i)->setIsDead(true);
-	}
+    }
     for(int i = 0; i < credits_.size(); i++)
     {
         int cred_x = credits_.at(i)->getRect().x();
@@ -716,11 +717,11 @@ void Bakoom::checkOutOfBounds()			// delete objects outside of window
 
 void Bakoom::autoHeal()
 {
-    if(clock() - autoHealTimer_ >= autoHealCooldown_)
+    if(time.elapsed() - autoHealTimer_ >= autoHealCooldown_)
     {
         if(player_ ->getHealth() < player_ ->getMaxHealth()) player_ ->modifyHealth(autoHealAmount_);
         if(player_ ->getHealth() > player_ ->getMaxHealth()) player_ ->setHealth(player_ ->getMaxHealth());
-        autoHealTimer_ = clock();
+        autoHealTimer_ = time.elapsed();
     }
 }
 
