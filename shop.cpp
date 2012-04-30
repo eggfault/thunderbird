@@ -321,22 +321,22 @@ void Shop::buySelectedItem()
 {
     if(unlocked_[selectedShopItem_] && credits >= costs_[selectedShopItem_])      // item is unlocked and can be bought
     {
-        if(selectedShopItem_ == 0)
+        if(selectedShopItem_ == 0)          // if first item, give shield
             if(shield < maxShield)
-                if(shield <= maxShield - 50) shield += 50;
-                else shield = maxShield;
+                if(shield <= maxShield - 50) shield += 50;      // add 50 shield
+                else shield = maxShield;                        // don't let shield go above maxShield
             else
                 return;
-        else if(selectedShopItem_ == 2) { maxShield += 100; shield += 100; }
-        else if(hasItem[selectedShopItem_]) return;
-        else if(selectedShopItem_ >= 5 && selectedShopItem_ <= 7 && !hasItem[4]) return;
-        else if(selectedShopItem_ >= 9 && selectedShopItem_ <= 10 && !hasItem[8]) return;
-        else if(selectedShopItem_ >= 13 && selectedShopItem_ <= 14 && !hasItem[12]) return;
-        else if(selectedShopItem_ >= 18 && selectedShopItem_ <= 19 && !hasItem[16]) return;
-        else hasItem[selectedShopItem_] = true;
-        credits -= costs_[selectedShopItem_];
-        if(hasItem[11]) areaOfEffectRadius = 160;
-        if(hasItem[16]) maxPower = 175;
-        if(hasItem[17]) maxPower = 280;
+        else if(selectedShopItem_ == 2) { maxShield += 100; shield += 100; }                // increase maxShield
+        else if(hasItem[selectedShopItem_]) return;                                         // prevent buying same item twice by accident
+        else if(selectedShopItem_ >= 5 && selectedShopItem_ <= 7 && !hasItem[4]) return;    // prevent buying certain items before unlocking them
+        else if(selectedShopItem_ >= 9 && selectedShopItem_ <= 10 && !hasItem[8]) return;   // ""
+        else if(selectedShopItem_ >= 13 && selectedShopItem_ <= 14 && !hasItem[12]) return; // ""
+        else if(selectedShopItem_ >= 18 && selectedShopItem_ <= 19 && !hasItem[16]) return; // ""
+        else hasItem[selectedShopItem_] = true;                                             // buy item and set it as bought
+        credits -= costs_[selectedShopItem_];                                               // subtract cost
+        if(hasItem[11]) areaOfEffectRadius = 160;                                           // upgrades
+        if(hasItem[16]) maxPower = 175;                                                     // ""
+        if(hasItem[17]) maxPower = 280;                                                     // ""
     }
 }
