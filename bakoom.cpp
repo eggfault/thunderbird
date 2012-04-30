@@ -242,13 +242,13 @@ void Bakoom::timerEvent(QTimerEvent *event)
     // automove credits
     for(int i = 0; i < credits_.size(); i++)
         credits_.at(i)->autoMove();
-    // automove medipaks_
+    // automove medipaks
     for(int i = 0; i < medipaks_.size(); i++)
         medipaks_.at(i)->autoMove();
-    // automove projectiles_
+    // automove projectiles
     for(int i = 0; i < projectiles_.size(); i++)
     {
-        // homing projectiles_
+        // homing projectiles
         if(projectiles_.at(i)->isHoming())
         {
             int proj_x = projectiles_.at(i)->getRect().x(), proj_y = projectiles_.at(i)->getRect().y();
@@ -459,7 +459,7 @@ void Bakoom::victory()
 
 void Bakoom::shootProjectile()
 {
-    if(time.elapsed() - shootCooldown_ >= cooldowns_[currentWeapon_])
+    if(time.elapsed() - shootCooldown_ >= cooldowns_[currentWeapon_])   // cooldown timer
     {
         if(ammunition_[currentWeapon_] <= 0)
             return;
@@ -613,7 +613,7 @@ void Bakoom::checkCollision()
 {
     for(int i = 0; i < projectiles_.size(); i++)
     {
-        // kill projectiles_ that collide with bubble shield
+        // kill projectiles that collide with bubble shield
         if(projectiles_.at(i)->isEnemyProjectile() && bubbleShield_->isActivated() && projectiles_.at(i)->getRect().intersects(player_ ->getRect()))
             projectiles_.at(i)->setIsDead(true);
         else if(projectiles_.at(i)->isEnemyProjectile())
@@ -632,7 +632,7 @@ void Bakoom::checkCollision()
                     enemies_.at(j)->modifyHealth(-1*projectiles_.at(i)->getDamage());    // damage enemy
                     // explosive?
                     if(projectiles_.at(i)->isExplosive())
-                        for(int k = 0; k < enemies_.size(); k++)
+                        for(int k = 0; k < enemies_.size(); k++)        // damage all enemies in vicinity
                         {
                             int distance = distanceBetween(projectiles_.at(i)->getRect().x(),projectiles_.at(i)->getRect().y(),
                                                            enemies_.at(k)->getRect().x(),enemies_.at(k)->getRect().y());
@@ -727,21 +727,20 @@ void Bakoom::autoHeal()
 
 void Bakoom::createRandomScenery()
 {
-    if(rand() % 100 < islandQuality)
+    if(rand() % 100 < islandQuality)    // probability of generating island
     {
         int speed = 2;
         int scen_x = rand()%windowWidth;
         int islandTypeA = rand()%10;
         int islandTypeB = rand()%10;
-        while(islandTypeB == islandTypeA) islandTypeB = rand()%5;
         scenery_.push_back(new Scenery(scen_x,-100,speed,islandTypeA,rand()%360));
         scenery_.push_back(new Scenery(scen_x+rand()%40,-100-rand()%40,speed,islandTypeB,rand()%360));
-        if(rand() % 5 < 1)
+        if(rand() % 5 < 1)              // 3 islands?
         {
             int islandTypeC = rand()%10;
             scenery_.push_back(new Scenery(scen_x+rand()%80,-100-rand()%80,speed,islandTypeC,rand()%360));
         }
-        if(rand() % 10 < 1)
+        if(rand() % 10 < 1)             // 4 islands!
         {
             int islandTypeD = rand()%10;
             scenery_.push_back(new Scenery(scen_x+rand()%150,-100-rand()%150,speed,islandTypeD,rand()%360));
@@ -766,6 +765,7 @@ Enemy* Bakoom::nearestEnemyTo(int x, int y)
     return enemies_.at(nearestEnemyIndex);
 }
 
+// returns distance between (x1,y1) and (y2,x2)
 double Bakoom::distanceBetween(int x1, int y1, int x2, int y2)
 {
     return sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
